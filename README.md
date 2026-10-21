@@ -1,106 +1,87 @@
-# EDVAK Forge --- AI Front-Desk Agent
+# EDVAK Forge — AI Front-Desk Agent
 
-A deterministic, safety-first front-desk agent for the fictional
-Maplewood Family Clinic. It processes the 40 supplied synthetic
-messages, classifies urgency and intent, uses clinic tools exposed
-through the Model Context Protocol (MCP), and records a structured
-result for each message.
+A deterministic, safety-first front-desk agent for the fictional Maplewood
+Family Clinic. It processes synthetic inbox messages, calls clinic tools
+through the Model Context Protocol (MCP), routes messages to human queues,
+and records a structured result for every message.
 
-> **Safety note:** This project uses synthetic data only. It is a
-> take-home prototype, not a clinical system, and must not be used to
-> make care decisions or handle real patient information.
+> **Safety:** This is a take-home prototype using synthetic data only. It is
+> not a clinical system, must not be used for care decisions, and must never
+> be given real patient information.
 
-## Evaluation results
+## Evaluation
 
-Evaluation on the supplied 40-message sample set (run with
-`python agent.py` followed by `python evaluate.py`):
+Run `python agent.py` followed by `python evaluate.py` to reproduce these
+results on the supplied labeled sample:
 
 | Metric | Result |
 | --- | ---: |
 | Messages processed | 40 / 40 |
 | Urgency accuracy | 40 / 40 (100%) |
-| Strict emergency recall (labels accepting only emergency) | 4 / 4 (100%) |
+| Strict emergency recall (unambiguous emergency labels) | 4 / 4 (100%) |
 | Exact action match | 40 / 40 (100%) |
 | Action precision / recall | 100% / 100% |
 | Exact intent match | 40 / 40 (100%) |
 | Output, tool, and safety invariant errors | 0 |
-| Must-not violations | 0 |
+| Labeled must-not violations | 0 |
 
-These figures describe performance on the supplied labelled sample only.
-They do not establish performance on unseen messages or production
-readiness. Two labels permit either `urgent` or `emergency`; the agent
-chooses `urgent` for passive hopelessness (M006) and `emergency` for the
-explicit bleeding emergency (M017). The evaluator reports strict
-emergency recall separately and also checks accepted urgency per case.
-The sample is small and must not be treated as a general accuracy estimate.
+Two labels accept either `urgent` or `emergency`. The agent classifies
+passive hopelessness (M006) as urgent and the explicit bleeding emergency
+(M017) as emergency. The evaluator checks the accepted urgency for each
+message and reports strict emergency recall separately.
+
+These are results on a small, fixed sample, not estimates of real-world
+accuracy or proof of safety on unseen messages. The evaluator reports
+individual mismatches, emergency misses, tool failures, malformed output,
+unsafe emergency responses, appointment conflicts, and must-not violations;
+it exits nonzero if any are found.
 
 ## Architecture
 
-The implementation separates deterministic clinic operations from
-message handling:
+1. **JSON data:** `clinic.json`, `patients.json`, `medications.json`, and
+   `appointments.json` are the synthetic clinic policy and records.
+   Operational changes live in memory for the process run.
+2. **Clinic tools (`tools.py`):** patient verification, caregiver
+   authorization, refill eligibility, appointment lookup and scheduling,
+   and queue validation.
+3. **MCP server (`server.py`):** exposes clinic operations as MCP tools over
+   stdio.
+4. **MCP client bridge (`mcp_bridge.py`):** maintains the MCP client session,
+   validates response types, and closes the server cleanly.
+5. **Agent (`agent.py`):** deterministic intent and urgency classification,
+   safety and privacy checks, tool orchestration, queue routing, and reply
+   drafting. Emergency messages are escalated before routine processing.
+   Appointment operations are only reported as complete after a successful
+   tool response. Refills are never approved or prescribed by the agent.
+6. **Evaluation and tests:** `evaluate.py` checks labels, output shape, tool
+   evidence, routing, emergency response, privacy, and appointment
+   constraints. `tests/test_project.py` covers key policy and integration
+   behaviors.
 
-1.  **JSON data layer** --- `clinic.json`, `patients.json`,
-    `medications.json`, and `appointments.json` provide the synthetic
-    clinic policies and records. State-changing operations are kept in
-    process for a run, as permitted by the assignment.
-2.  **Clinic tools** --- `tools.py` implements patient
-    lookup/verification, refill-policy checks, appointment availability
-    and operations, and message routing.
-3.  **MCP server** --- `server.py` exposes the clinic operations as MCP
-    tools over stdio. It provides tools for patient verification,
-    medication and appointment lookup, refill eligibility, slot search,
-    booking, rescheduling, cancellation, and routing.
-4.  **MCP client bridge** --- `mcp_bridge.py` connects the agent to the
-    local MCP server, validates responses, and shuts down its stdio session.
-5.  **Agent** --- `agent.py` detects intent and urgency, applies
-    explicit safety rules, calls tools where appropriate, chooses human
-    queues, and drafts a reply. Emergency escalation precedes identity
-    lookup; normal refill and appointment changes require verification.
-    Appointment booking, cancellation, and rescheduling call the actual
-    stateful tools and confirm success before claiming completion.
-6.  **Evaluation harness** --- `evaluate.py` compares `results.json`
-    against `labels_sample.json` and validates the output contract, action
-    vocabulary, route/tool consistency, verified patient IDs, safe emergency
-    responses, state-changing tool evidence, appointment constraints,
-    urgency, intent/action metrics, and every labelled `must_not` constraint.
-
-Processing logs include message IDs, intents, actions, queue outcomes,
-tool status, and durations. They deliberately do not log message bodies.
-The result's `tool_trace` is also sanitized: it omits demographic details,
-medication names, and patient IDs from appointment records.
-
-The agent is deliberately deterministic rather than LLM-driven. For this
-small labelled dataset, explicit rules make behaviour reproducible and
-easier to audit. No LLM provider is used, so model inference cost for
-the current run is **\$0**. This does not include development time or
+The agent is deterministic rather than LLM-driven to make decisions
+reproducible and auditable on this assignment. No LLM provider is used; the
+sample run's model inference cost is **$0**. This excludes development and
 local compute.
 
-## What was reused and what was built
+## What was reused and built
 
--   **Reused:** Python standard-library capabilities, the MCP Python
-    SDK, and the supplied synthetic JSON dataset and labelled evaluation
-    cases.
--   **Built/adapted for this project:** the deterministic clinic
-    operations in `tools.py`, MCP wrappers in `server.py`, stdio client
-    bridge in `mcp_bridge.py`, intent/urgency and safety logic in
-    `agent.py`, and the evaluation/reporting workflow in `evaluate.py`.
--   **Storage choice:** the supplied JSON files are used instead of
-    MongoDB to keep the prototype small and reproducible. In-memory
-    changes are sufficient for the assignment's run-scoped persistence
-    requirement.
+- **Reused:** Python standard library, the MCP Python SDK, and the supplied
+  synthetic JSON data and labels.
+- **Built:** clinic operations, MCP server and bridge, classification and
+  safety logic, evaluation harness, regression tests, and run instructions.
+- **Storage:** JSON files are used instead of MongoDB; run-scoped in-memory
+  state is sufficient for this prototype.
 
 ## Requirements
 
--   Python 3.12 (the project was tested with Python 3.12)
--   Dependencies from `requirements.txt`, including the MCP Python SDK
+- Python 3.12
+- Dependencies in `requirements.txt`
 
 ## Setup and run
 
-Run these commands from the project directory.
+From the project directory in Windows PowerShell:
 
-### Windows PowerShell
-
-``` powershell
+```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
@@ -108,117 +89,46 @@ pip install -r requirements.txt
 python -m py_compile .\tools.py .\server.py .\mcp_bridge.py .\agent.py .\evaluate.py
 python agent.py
 python evaluate.py
-```
-
-If PowerShell blocks virtual-environment activation, use the Python
-executable inside `.venv` directly or follow your local PowerShell
-execution-policy guidance.
-
-`agent.py` writes one output row per input message to `results.json`.
-`evaluate.py` prints the metrics and mismatch/violation details. The MCP
-server is started by the bridge over stdio; it does not need to be
-launched manually in a separate terminal for the normal agent run.
-For a new batch, provide a JSON list of message objects and an output path:
-
-``` powershell
-python agent.py --input .\new_messages.json --output .\new_results.json
-```
-
-Run the focused policy and end-to-end regression tests:
-
-``` powershell
 python -m unittest discover -s tests -v
 ```
 
-## Output format
+The MCP server is started automatically over stdio by the client bridge.
+`agent.py` writes `results.json`; `evaluate.py` prints the metrics and
+diagnostics.
 
-Each row in `results.json` contains:
+To process a new batch, supply a JSON list of message objects:
 
--   `id` --- input message ID
--   `patient_id` --- verified patient ID, or `null` when verification is
-    not established
--   `intents` --- detected message intents
--   `urgency` --- `emergency`, `urgent`, or `routine`
--   `actions` --- selected action labels
--   `routed_to` --- list of destination queues
--   `tool_calls` --- list of tool names called
--   `tool_trace` --- tool names with results or explicit errors for audit
--   `reply_draft` --- a proposed response, not a message sent to a
-    patient
-
-The agent does not issue prescriptions. Refill outcomes are
-recommendations for review under the supplied clinic policy, and
-clinical issues are routed to a human team.
-
-## Known limitations and what I would improve with another week
-
-The 40-message evaluation is small and fixed. The deterministic
-classification rules are not a substitute for clinical review and may
-miss paraphrases, typos, multilingual messages, ambiguous identity
-details, and combinations not represented in the sample. A perfect score
-on these cases may reflect adaptation to the supplied examples; it is not
-evidence of general accuracy or safety.
-
-With another week, I would:
-
-1.  Add a separate, unseen test set with paraphrases, adversarial
-    messages, edge cases, and multi-intent combinations.
-2.  Expand the included tool and end-to-end tests into randomized and
-    adversarial suites, especially for verification, caregiver authority,
-    booking conflicts, provider leave, holidays, and refill boundaries.
-3.  Add durable dashboards and alerts for tool availability, routing
-    latency, escalation delivery, and safely redacted operational metrics.
-4.  Make policy rules and action selection easier to inspect through
-    explicit decision records and versioned policy tests.
-5.  Add robust handling for tool timeouts, malformed tool responses,
-    retries where safe, and idempotency for state-changing operations.
-6.  Compare the deterministic baseline with an LLM-assisted classifier
-    only if it can be constrained, evaluated, and safely fall back to
-    deterministic rules and human review.
-
-## Requirements before using real patient data
-
-This prototype is not suitable for real patient data. Before any real
-deployment, I would require at least:
-
--   A formal privacy, security, clinical-safety, and legal review.
--   Approved identity verification and caregiver-authorization flows;
-    least-privilege access and role-based authorization.
--   Encryption in transit and at rest, secrets management,
-    retention/deletion controls, and auditable access logs.
--   A secure, transactional data store with concurrency control and
-    idempotency for appointment changes.
--   Explicit clinician-approved escalation protocols, reliable emergency
-    handling, human oversight, and a safe failure mode when tools are
-    unavailable.
--   Monitoring, incident response, access reviews, backup/recovery
-    procedures, and validated testing against representative cases.
--   Appropriate consent, data-processing agreements, and compliance with
-    applicable healthcare and privacy requirements.
--   No use of patient data for model training or external services
-    without explicit authorization and review.
-
-## Project files
-
-``` text
-edvak-forge/
-├── agent.py
-├── mcp_bridge.py
-├── server.py
-├── tools.py
-├── evaluate.py
-├── clinic.json
-├── patients.json
-├── medications.json
-├── appointments.json
-├── messages_sample.json
-├── labels_sample.json
-├── requirements.txt
-├── tests/
-│   └── test_project.py
-├── results.json
-└── README.md
+```powershell
+python agent.py --input .\new_messages.json --output .\new_results.json
 ```
 
-The project is a local take-home prototype. Keep `.venv/`, Python cache
-directories, and temporary backup files out of the Git repository.
+## Output
+
+Each result includes the assignment fields: `id`, verified `patient_id`
+(or `null`), `intents`, `urgency`, `actions`, list-valued `routed_to`,
+`tool_calls` (tool names), and `reply_draft`. An additional sanitized
+`tool_trace` records tool outcomes and errors without including patient
+demographics or medication names. The reply is a draft and is not sent.
+
+## Limitations and next steps
+
+The rule-based classifier may miss paraphrases, typos, multilingual
+messages, ambiguous identity, and combinations absent from the sample. A
+perfect score on these examples can reflect adaptation to the supplied
+cases; it does not establish performance on unseen messages.
+
+With another week, I would add an independent unseen/adversarial evaluation
+set, expand randomized boundary and integration tests, and add operational
+dashboards and alerts for tool availability, routing latency, and escalation
+delivery. I would also investigate versioned policy rules and safe
+idempotency for state-changing operations.
+
+## Before any real-patient use
+
+This prototype is **not suitable for real patient data**. Before deployment,
+it would require formal privacy, security, legal, and clinical-safety review;
+approved identity and caregiver authorization; least-privilege access;
+encryption and secrets management; retention controls; transactional storage
+and idempotency; clinician-approved escalation protocols; human oversight;
+monitoring and incident response; and compliance with applicable healthcare
+requirements. No real patient data is included or used.
