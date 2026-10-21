@@ -1,0 +1,2913 @@
+[
+  {
+    "id": "M001",
+    "patient_id": "P002",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "prepare_refill_for_approval"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P002"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 2
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": true,
+          "reason": "eligible_for_provider_approval",
+          "requires_provider_approval": true,
+          "refills_remaining": 3
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M001",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M002",
+    "patient_id": "P007",
+    "intents": [
+      "reschedule"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "reschedule_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_appointments",
+      "find_available_slots",
+      "reschedule_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P007"
+        }
+      },
+      {
+        "tool": "get_patient_appointments",
+        "result": [
+          {
+            "id": "A014",
+            "provider": "KIM",
+            "date": "2026-11-09",
+            "start": "15:20",
+            "end": "15:40",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A035",
+            "provider": "KIM",
+            "date": "2026-11-11",
+            "start": "10:00",
+            "end": "10:20",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A052",
+            "provider": "PATEL",
+            "date": "2026-11-12",
+            "start": "09:20",
+            "end": "10:00",
+            "visit_type": "annual_physical",
+            "status": "booked"
+          },
+          {
+            "id": "A064",
+            "provider": "PATEL",
+            "date": "2026-11-13",
+            "start": "09:00",
+            "end": "09:20",
+            "visit_type": "telehealth",
+            "status": "booked"
+          },
+          {
+            "id": "A087",
+            "provider": "KIM",
+            "date": "2026-11-17",
+            "start": "13:20",
+            "end": "13:40",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A111",
+            "provider": "PATEL",
+            "date": "2026-11-19",
+            "start": "14:20",
+            "end": "14:40",
+            "visit_type": "telehealth",
+            "status": "booked"
+          },
+          {
+            "id": "A152",
+            "provider": "PATEL",
+            "date": "2026-11-24",
+            "start": "14:40",
+            "end": "15:00",
+            "visit_type": "telehealth",
+            "status": "booked"
+          }
+        ]
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-13",
+              "start": "09:00",
+              "end": "09:20",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "09:20",
+              "end": "09:40",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "09:40",
+              "end": "10:00",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "10:00",
+              "end": "10:20",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "10:20",
+              "end": "10:40",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "10:40",
+              "end": "11:00",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "11:20",
+              "end": "11:40",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "13:00",
+              "end": "13:20",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "13:20",
+              "end": "13:40",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "13:40",
+              "end": "14:00",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "14:00",
+              "end": "14:20",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "14:20",
+              "end": "14:40",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "14:40",
+              "end": "15:00",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "15:00",
+              "end": "15:20",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "15:20",
+              "end": "15:40",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "15:40",
+              "end": "16:00",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "16:00",
+              "end": "16:20",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "16:20",
+              "end": "16:40",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-13",
+              "start": "16:40",
+              "end": "17:00",
+              "provider": "KIM",
+              "visit_type": "follow_up"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "reschedule_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A035",
+            "provider": "KIM",
+            "date": "2026-11-13",
+            "start": "13:00",
+            "end": "13:20",
+            "visit_type": "follow_up",
+            "status": "booked"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M002",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your appointment change has been completed."
+  },
+  {
+    "id": "M003",
+    "patient_id": "P003",
+    "intents": [
+      "clinical"
+    ],
+    "urgency": "emergency",
+    "actions": [
+      "escalate_emergency"
+    ],
+    "routed_to": [
+      "clinician_urgent"
+    ],
+    "tool_calls": [
+      "route_message",
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M003",
+          "routed_to": "clinician_urgent",
+          "status": "queued"
+        }
+      },
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P003"
+        }
+      }
+    ],
+    "reply_draft": "This may be a medical emergency. Please call 911 or go to the nearest emergency department now. The clinic has been alerted."
+  },
+  {
+    "id": "M004",
+    "patient_id": "P004",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "refill_needs_visit",
+      "offer_appointment"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P004"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "visit_required",
+          "route_to": "provider_refills",
+          "offer_appointment": true
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M004",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "A visit is needed before this refill can be prepared. I've sent the request to the provider and the front desk can help arrange a visit."
+  },
+  {
+    "id": "M005",
+    "patient_id": "P006",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_provider"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P006"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "controlled_substance",
+          "route_to": "provider_refills"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M005",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M006",
+    "patient_id": "P005",
+    "intents": [
+      "refill",
+      "clinical"
+    ],
+    "urgency": "urgent",
+    "actions": [
+      "prepare_refill_for_approval",
+      "route_to_clinician"
+    ],
+    "routed_to": [
+      "provider_refills",
+      "clinician_urgent"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P005"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": true,
+          "reason": "eligible_for_provider_approval",
+          "requires_provider_approval": true,
+          "refills_remaining": 2
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M006",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M006",
+          "routed_to": "clinician_urgent",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "I've routed your clinical concern to the care team for review. A care team member will follow up; this automated service cannot provide individual clinical advice."
+  },
+  {
+    "id": "M007",
+    "patient_id": null,
+    "intents": [
+      "new_patient"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "answer_directly",
+      "offer_new_patient_booking"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M007",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Yes, the clinic accepts new-patient inquiries. The front desk can help arrange an appointment."
+  },
+  {
+    "id": "M008",
+    "patient_id": "P010",
+    "intents": [
+      "billing"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_billing"
+    ],
+    "routed_to": [
+      "billing"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P010"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M008",
+          "routed_to": "billing",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "I've routed your billing question to the billing team."
+  },
+  {
+    "id": "M009",
+    "patient_id": "P012",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "prepare_refill_for_approval"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P012"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": true,
+          "reason": "eligible_for_provider_approval",
+          "requires_provider_approval": true,
+          "refills_remaining": 1
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M009",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M010",
+    "patient_id": "P013",
+    "intents": [
+      "schedule"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "book_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "find_available_slots",
+      "book_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P013"
+        }
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-17",
+              "start": "09:00",
+              "end": "09:20",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "09:20",
+              "end": "09:40",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "09:40",
+              "end": "10:00",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "10:00",
+              "end": "10:20",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "11:00",
+              "end": "11:20",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "11:20",
+              "end": "11:40",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "11:40",
+              "end": "12:00",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "13:00",
+              "end": "13:20",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "13:20",
+              "end": "13:40",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "13:40",
+              "end": "14:00",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "14:00",
+              "end": "14:20",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "14:20",
+              "end": "14:40",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "14:40",
+              "end": "15:00",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "15:00",
+              "end": "15:20",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "16:20",
+              "end": "16:40",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-17",
+              "start": "16:40",
+              "end": "17:00",
+              "provider": "PATEL",
+              "visit_type": "follow_up"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "book_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A171",
+            "provider": "PATEL",
+            "date": "2026-11-17",
+            "start": "09:00",
+            "end": "09:20",
+            "visit_type": "follow_up",
+            "status": "booked"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M010",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your appointment is booked for 2026-11-17 at 09:00."
+  },
+  {
+    "id": "M011",
+    "patient_id": null,
+    "intents": [
+      "records"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "request_verification"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": false,
+          "verified": false,
+          "patient_id": null
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M011",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Please contact the clinic through its official contact details so we can verify your identity before processing this request."
+  },
+  {
+    "id": "M012",
+    "patient_id": "P014",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_provider"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P014"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "controlled_substance",
+          "route_to": "provider_refills"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M012",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M013",
+    "patient_id": "P015",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "refill_too_early"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P015"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "too_early",
+          "earliest_request_date": "2026-11-17"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M013",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "The request is too early. The earliest date it can be prepared is 2026-11-17."
+  },
+  {
+    "id": "M014",
+    "patient_id": "P017",
+    "intents": [
+      "clinical"
+    ],
+    "urgency": "emergency",
+    "actions": [
+      "escalate_emergency"
+    ],
+    "routed_to": [
+      "clinician_urgent"
+    ],
+    "tool_calls": [
+      "route_message",
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M014",
+          "routed_to": "clinician_urgent",
+          "status": "queued"
+        }
+      },
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P017"
+        }
+      }
+    ],
+    "reply_draft": "This may be a medical emergency. Please call 911 or go to the nearest emergency department now. The clinic has been alerted."
+  },
+  {
+    "id": "M015",
+    "patient_id": "P009",
+    "intents": [
+      "schedule",
+      "clinical"
+    ],
+    "urgency": "urgent",
+    "actions": [
+      "book_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "find_available_slots",
+      "book_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P009"
+        }
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-09",
+              "start": "09:00",
+              "end": "09:20",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "09:20",
+              "end": "09:40",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "09:40",
+              "end": "10:00",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "10:00",
+              "end": "10:20",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "10:20",
+              "end": "10:40",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "10:40",
+              "end": "11:00",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "11:00",
+              "end": "11:20",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "11:20",
+              "end": "11:40",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "11:40",
+              "end": "12:00",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "13:00",
+              "end": "13:20",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "13:20",
+              "end": "13:40",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "13:40",
+              "end": "14:00",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "14:00",
+              "end": "14:20",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "14:20",
+              "end": "14:40",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "15:40",
+              "end": "16:00",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "16:40",
+              "end": "17:00",
+              "provider": "KIM",
+              "visit_type": "sick_visit"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "book_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A172",
+            "provider": "KIM",
+            "date": "2026-11-09",
+            "start": "09:00",
+            "end": "09:20",
+            "visit_type": "sick_visit",
+            "status": "booked"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M015",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your appointment is booked for 2026-11-09 at 09:00."
+  },
+  {
+    "id": "M016",
+    "patient_id": "P018",
+    "intents": [
+      "schedule"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "book_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "find_available_slots",
+      "book_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P018"
+        }
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-16",
+              "start": "10:20",
+              "end": "11:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-16",
+              "start": "13:00",
+              "end": "13:40",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-16",
+              "start": "13:20",
+              "end": "14:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-16",
+              "start": "14:20",
+              "end": "15:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-16",
+              "start": "14:40",
+              "end": "15:20",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-16",
+              "start": "15:00",
+              "end": "15:40",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-16",
+              "start": "16:20",
+              "end": "17:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "book_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A173",
+            "provider": "PATEL",
+            "date": "2026-11-16",
+            "start": "10:20",
+            "end": "11:00",
+            "visit_type": "annual_physical",
+            "status": "booked"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M016",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Su cita está reservada para el 2026-11-16 a las 10:20. Si necesita hacer cambios, comuníquese con la recepción."
+  },
+  {
+    "id": "M017",
+    "patient_id": "P020",
+    "intents": [
+      "refill",
+      "clinical"
+    ],
+    "urgency": "emergency",
+    "actions": [
+      "escalate_emergency"
+    ],
+    "routed_to": [
+      "clinician_urgent"
+    ],
+    "tool_calls": [
+      "route_message",
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M017",
+          "routed_to": "clinician_urgent",
+          "status": "queued"
+        }
+      },
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P020"
+        }
+      }
+    ],
+    "reply_draft": "This may be a medical emergency. Please call 911 or go to the nearest emergency department now. The clinic has been alerted."
+  },
+  {
+    "id": "M018",
+    "patient_id": "P022",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "flag_suspicious_instruction",
+      "prepare_refill_for_approval"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P022"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": true,
+          "reason": "eligible_for_provider_approval",
+          "requires_provider_approval": true,
+          "refills_remaining": 2
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M018",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M019",
+    "patient_id": "P021",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_provider"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P021"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "controlled_substance",
+          "route_to": "provider_refills"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M019",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M020",
+    "patient_id": "P001",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "prepare_refill_for_approval"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P001"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": true,
+          "reason": "eligible_for_provider_approval",
+          "requires_provider_approval": true,
+          "refills_remaining": 2
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M020",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Tu solicitud de medicamento se ha enviado para revisión. Cualquier receta requiere la aprobación del profesional que te atiende; no se ha enviado ninguna receta."
+  },
+  {
+    "id": "M021",
+    "patient_id": "P008",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_provider"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P008"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "no_refills_remaining",
+          "route_to": "provider_refills"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M021",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M022",
+    "patient_id": "P011",
+    "intents": [
+      "cancel"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "cancel_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_appointments",
+      "cancel_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P011"
+        }
+      },
+      {
+        "tool": "get_patient_appointments",
+        "result": [
+          {
+            "id": "A017",
+            "provider": "KIM",
+            "date": "2026-11-10",
+            "start": "11:00",
+            "end": "11:20",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A025",
+            "provider": "OKAFOR",
+            "date": "2026-11-10",
+            "start": "15:00",
+            "end": "15:20",
+            "visit_type": "telehealth",
+            "status": "booked"
+          },
+          {
+            "id": "A075",
+            "provider": "PATEL",
+            "date": "2026-11-16",
+            "start": "11:00",
+            "end": "11:40",
+            "visit_type": "annual_physical",
+            "status": "booked"
+          },
+          {
+            "id": "A079",
+            "provider": "KIM",
+            "date": "2026-11-16",
+            "start": "15:40",
+            "end": "16:20",
+            "visit_type": "annual_physical",
+            "status": "booked"
+          },
+          {
+            "id": "A115",
+            "provider": "KIM",
+            "date": "2026-11-20",
+            "start": "09:00",
+            "end": "09:20",
+            "visit_type": "sick_visit",
+            "status": "booked"
+          },
+          {
+            "id": "A119",
+            "provider": "KIM",
+            "date": "2026-11-20",
+            "start": "13:00",
+            "end": "13:20",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A146",
+            "provider": "OKAFOR",
+            "date": "2026-11-24",
+            "start": "11:20",
+            "end": "11:40",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A157",
+            "provider": "PATEL",
+            "date": "2026-11-25",
+            "start": "09:00",
+            "end": "09:20",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A167",
+            "provider": "PATEL",
+            "date": "2026-11-25",
+            "start": "14:40",
+            "end": "15:00",
+            "visit_type": "sick_visit",
+            "status": "booked"
+          }
+        ]
+      },
+      {
+        "tool": "cancel_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A017",
+            "provider": "KIM",
+            "date": "2026-11-10",
+            "start": "11:00",
+            "end": "11:20",
+            "visit_type": "follow_up",
+            "status": "cancelled"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M022",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your appointment change has been completed."
+  },
+  {
+    "id": "M023",
+    "patient_id": "P019",
+    "intents": [
+      "admin"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "answer_directly"
+    ],
+    "routed_to": [],
+    "tool_calls": [
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P019"
+        }
+      }
+    ],
+    "reply_draft": "The clinic is closed Friday, November 27, 2026, for the Thanksgiving holiday."
+  },
+  {
+    "id": "M024",
+    "patient_id": "P023",
+    "intents": [
+      "schedule"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "book_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "find_available_slots",
+      "book_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P023"
+        }
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-09",
+              "start": "09:20",
+              "end": "10:00",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "09:40",
+              "end": "10:20",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "10:00",
+              "end": "10:40",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "10:20",
+              "end": "11:00",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "10:40",
+              "end": "11:20",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "11:00",
+              "end": "11:40",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "11:20",
+              "end": "12:00",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "13:00",
+              "end": "13:40",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "13:20",
+              "end": "14:00",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "13:40",
+              "end": "14:20",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-09",
+              "start": "14:00",
+              "end": "14:40",
+              "provider": "KIM",
+              "visit_type": "annual_physical"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "book_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A174",
+            "provider": "KIM",
+            "date": "2026-11-09",
+            "start": "09:20",
+            "end": "10:00",
+            "visit_type": "annual_physical",
+            "status": "booked"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M024",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your appointment is booked for 2026-11-09 at 09:20."
+  },
+  {
+    "id": "M025",
+    "patient_id": "P024",
+    "intents": [
+      "refill",
+      "billing"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "prepare_refill_for_approval",
+      "route_to_billing"
+    ],
+    "routed_to": [
+      "provider_refills",
+      "billing"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P024"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": true,
+          "reason": "eligible_for_provider_approval",
+          "requires_provider_approval": true,
+          "refills_remaining": 1
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M025",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M025",
+          "routed_to": "billing",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your medication request has been routed for review. Any prescription requires provider approval and has not been sent."
+  },
+  {
+    "id": "M026",
+    "patient_id": "P016",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "urgent",
+    "actions": [
+      "refill_needs_visit",
+      "offer_appointment",
+      "route_to_provider"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P016"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "visit_required",
+          "route_to": "provider_refills",
+          "offer_appointment": true
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M026",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "A visit is needed before this refill can be prepared. I've sent the request to the provider and the front desk can help arrange a visit."
+  },
+  {
+    "id": "M027",
+    "patient_id": null,
+    "intents": [
+      "third_party"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "decline_disclosure"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": false,
+          "verified": false,
+          "patient_id": null
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M027",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "I'm unable to confirm or disclose another person's appointment details. Please ask them to contact the clinic directly or use the clinic's approved authorization process."
+  },
+  {
+    "id": "M028",
+    "patient_id": "P025",
+    "intents": [
+      "schedule"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "offer_alternatives"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "find_available_slots",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P025"
+        }
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [],
+          "reason": "provider_unavailable"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M028",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "The requested time is unavailable or could not be confirmed. The front desk can help with alternatives."
+  },
+  {
+    "id": "M029",
+    "patient_id": "P002",
+    "intents": [
+      "schedule"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "offer_alternatives"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "find_available_slots",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P002"
+        }
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-12",
+              "start": "09:20",
+              "end": "09:40",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "09:40",
+              "end": "10:00",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "10:00",
+              "end": "10:20",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "11:20",
+              "end": "11:40",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "11:40",
+              "end": "12:00",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "13:00",
+              "end": "13:20",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "13:20",
+              "end": "13:40",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "13:40",
+              "end": "14:00",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "14:20",
+              "end": "14:40",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "14:40",
+              "end": "15:00",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "15:00",
+              "end": "15:20",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "15:20",
+              "end": "15:40",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "15:40",
+              "end": "16:00",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "16:00",
+              "end": "16:20",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "16:20",
+              "end": "16:40",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            },
+            {
+              "date": "2026-11-12",
+              "start": "16:40",
+              "end": "17:00",
+              "provider": "OKAFOR",
+              "visit_type": "follow_up"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M029",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "The requested time is unavailable or could not be confirmed. The front desk can help with alternatives."
+  },
+  {
+    "id": "M030",
+    "patient_id": "P019",
+    "intents": [
+      "clinical"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_clinician"
+    ],
+    "routed_to": [
+      "clinician_routine"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P019"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M030",
+          "routed_to": "clinician_routine",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "I've routed your clinical concern to the care team for review. A care team member will follow up; this automated service cannot provide individual clinical advice."
+  },
+  {
+    "id": "M031",
+    "patient_id": "P007",
+    "intents": [
+      "other"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "acknowledge"
+    ],
+    "routed_to": [],
+    "tool_calls": [
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P007"
+        }
+      }
+    ],
+    "reply_draft": "You're welcome! Happy to help."
+  },
+  {
+    "id": "M032",
+    "patient_id": "P010",
+    "intents": [
+      "clinical"
+    ],
+    "urgency": "emergency",
+    "actions": [
+      "escalate_emergency"
+    ],
+    "routed_to": [
+      "clinician_urgent"
+    ],
+    "tool_calls": [
+      "route_message",
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M032",
+          "routed_to": "clinician_urgent",
+          "status": "queued"
+        }
+      },
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P010"
+        }
+      }
+    ],
+    "reply_draft": "This may be a medical emergency. Please call 911 or go to the nearest emergency department now. The clinic has been alerted."
+  },
+  {
+    "id": "M033",
+    "patient_id": "P012",
+    "intents": [
+      "admin"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_front_desk"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P012"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M033",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "I've routed your request to the front desk."
+  },
+  {
+    "id": "M034",
+    "patient_id": "P015",
+    "intents": [
+      "reschedule"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "reschedule_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_appointments",
+      "find_available_slots",
+      "reschedule_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P015"
+        }
+      },
+      {
+        "tool": "get_patient_appointments",
+        "result": [
+          {
+            "id": "A032",
+            "provider": "PATEL",
+            "date": "2026-11-10",
+            "start": "16:40",
+            "end": "17:00",
+            "visit_type": "sick_visit",
+            "status": "booked"
+          },
+          {
+            "id": "A057",
+            "provider": "PATEL",
+            "date": "2026-11-12",
+            "start": "11:00",
+            "end": "11:20",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A073",
+            "provider": "PATEL",
+            "date": "2026-11-16",
+            "start": "09:00",
+            "end": "09:40",
+            "visit_type": "annual_physical",
+            "status": "booked"
+          },
+          {
+            "id": "A103",
+            "provider": "PATEL",
+            "date": "2026-11-19",
+            "start": "09:40",
+            "end": "10:00",
+            "visit_type": "follow_up",
+            "status": "booked"
+          },
+          {
+            "id": "A121",
+            "provider": "KIM",
+            "date": "2026-11-20",
+            "start": "13:40",
+            "end": "14:00",
+            "visit_type": "telehealth",
+            "status": "booked"
+          },
+          {
+            "id": "A128",
+            "provider": "OKAFOR",
+            "date": "2026-11-23",
+            "start": "10:00",
+            "end": "10:20",
+            "visit_type": "sick_visit",
+            "status": "booked"
+          },
+          {
+            "id": "A142",
+            "provider": "KIM",
+            "date": "2026-11-24",
+            "start": "09:20",
+            "end": "09:40",
+            "visit_type": "sick_visit",
+            "status": "booked"
+          }
+        ]
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-23",
+              "start": "09:00",
+              "end": "09:40",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "09:20",
+              "end": "10:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "10:20",
+              "end": "11:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "10:40",
+              "end": "11:20",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "11:00",
+              "end": "11:40",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "13:40",
+              "end": "14:20",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "14:00",
+              "end": "14:40",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "14:20",
+              "end": "15:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "14:40",
+              "end": "15:20",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "15:00",
+              "end": "15:40",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "15:20",
+              "end": "16:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "15:40",
+              "end": "16:20",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "16:00",
+              "end": "16:40",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            },
+            {
+              "date": "2026-11-23",
+              "start": "16:20",
+              "end": "17:00",
+              "provider": "PATEL",
+              "visit_type": "annual_physical"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "reschedule_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A073",
+            "provider": "PATEL",
+            "date": "2026-11-23",
+            "start": "09:00",
+            "end": "09:40",
+            "visit_type": "annual_physical",
+            "status": "booked"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M034",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your appointment change has been completed."
+  },
+  {
+    "id": "M035",
+    "patient_id": "P022",
+    "intents": [
+      "clinical"
+    ],
+    "urgency": "emergency",
+    "actions": [
+      "escalate_emergency"
+    ],
+    "routed_to": [
+      "clinician_urgent"
+    ],
+    "tool_calls": [
+      "route_message",
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M035",
+          "routed_to": "clinician_urgent",
+          "status": "queued"
+        }
+      },
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P022"
+        }
+      }
+    ],
+    "reply_draft": "This may be a medical emergency. Please call 911 or go to the nearest emergency department now. The clinic has been alerted."
+  },
+  {
+    "id": "M036",
+    "patient_id": "P017",
+    "intents": [
+      "refill"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "refill_too_early"
+    ],
+    "routed_to": [
+      "provider_refills"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "get_patient_medications",
+      "check_refill_eligibility",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P017"
+        }
+      },
+      {
+        "tool": "get_patient_medications",
+        "result": {
+          "record_count": 1
+        }
+      },
+      {
+        "tool": "check_refill_eligibility",
+        "result": {
+          "eligible": false,
+          "reason": "too_early",
+          "earliest_request_date": "2026-11-21"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M036",
+          "routed_to": "provider_refills",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "The request is too early. The earliest date it can be prepared is 2026-11-21."
+  },
+  {
+    "id": "M037",
+    "patient_id": "P023",
+    "intents": [
+      "admin"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "answer_directly"
+    ],
+    "routed_to": [],
+    "tool_calls": [
+      "find_patient"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P023"
+        }
+      }
+    ],
+    "reply_draft": "The clinic is open Monday through Friday, 9:00 a.m.–5:00 p.m., with lunch from 12:00–1:00 p.m."
+  },
+  {
+    "id": "M038",
+    "patient_id": null,
+    "intents": [
+      "spam"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "no_action"
+    ],
+    "routed_to": [],
+    "tool_calls": [],
+    "tool_trace": [],
+    "reply_draft": ""
+  },
+  {
+    "id": "M039",
+    "patient_id": "P014",
+    "intents": [
+      "schedule",
+      "clinical"
+    ],
+    "urgency": "urgent",
+    "actions": [
+      "book_appointment"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "find_available_slots",
+      "book_appointment",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P014"
+        }
+      },
+      {
+        "tool": "find_available_slots",
+        "result": {
+          "slots": [
+            {
+              "date": "2026-11-10",
+              "start": "09:00",
+              "end": "09:20",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "09:20",
+              "end": "09:40",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "09:40",
+              "end": "10:00",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "10:00",
+              "end": "10:20",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "10:20",
+              "end": "10:40",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "10:40",
+              "end": "11:00",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "11:00",
+              "end": "11:20",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "11:20",
+              "end": "11:40",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "13:00",
+              "end": "13:20",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "13:20",
+              "end": "13:40",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "14:20",
+              "end": "14:40",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "14:40",
+              "end": "15:00",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "15:20",
+              "end": "15:40",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "15:40",
+              "end": "16:00",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            },
+            {
+              "date": "2026-11-10",
+              "start": "16:40",
+              "end": "17:00",
+              "provider": "OKAFOR",
+              "visit_type": "sick_visit"
+            }
+          ],
+          "reason": "ok"
+        }
+      },
+      {
+        "tool": "book_appointment",
+        "result": {
+          "success": true,
+          "appointment": {
+            "id": "A175",
+            "provider": "OKAFOR",
+            "date": "2026-11-10",
+            "start": "09:00",
+            "end": "09:20",
+            "visit_type": "sick_visit",
+            "status": "booked"
+          }
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M039",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Your appointment is booked for 2026-11-10 at 09:00."
+  },
+  {
+    "id": "M040",
+    "patient_id": "P009",
+    "intents": [
+      "records"
+    ],
+    "urgency": "routine",
+    "actions": [
+      "route_to_front_desk"
+    ],
+    "routed_to": [
+      "front_desk"
+    ],
+    "tool_calls": [
+      "find_patient",
+      "route_message"
+    ],
+    "tool_trace": [
+      {
+        "tool": "find_patient",
+        "result": {
+          "found": true,
+          "verified": true,
+          "patient_id": "P009"
+        }
+      },
+      {
+        "tool": "route_message",
+        "result": {
+          "message_id": "M040",
+          "routed_to": "front_desk",
+          "status": "queued"
+        }
+      }
+    ],
+    "reply_draft": "Thanks for contacting the clinic. Our team will review your message."
+  }
+]
